@@ -1,5 +1,6 @@
 package com.taskflow.api.auth;
 
+import com.taskflow.api.common.MessageResponse;
 import com.taskflow.api.user.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -46,6 +47,20 @@ public class AuthController {
   @PostMapping("/logout-all")
   public ResponseEntity<Void> logoutAll(@AuthenticationPrincipal User currentUser) {
     authService.logoutAll(currentUser);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/forgot-password")
+  public ResponseEntity<MessageResponse> forgotPassword(
+      @Valid @RequestBody ForgotPasswordRequest request) {
+    authService.forgotPassword(request);
+    return ResponseEntity.ok(
+        new MessageResponse("If an account with that email exists, password reset instructions have been sent"));
+  }
+
+  @PostMapping("/reset-password")
+  public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+    authService.resetPassword(request);
     return ResponseEntity.noContent().build();
   }
 }

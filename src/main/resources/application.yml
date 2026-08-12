@@ -24,6 +24,8 @@ app:
     secret: ${JWT_SECRET:dev-only-secret-change-me-this-needs-to-be-at-least-256-bits-long}
     access-token-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:60}
     refresh-token-ttl-days: ${JWT_REFRESH_TTL_DAYS:30}
+  password-reset:
+    ttl-minutes: ${PASSWORD_RESET_TTL_MINUTES:30}
   admin:
     bootstrap-emails: ${ADMIN_BOOTSTRAP_EMAILS:}
 
