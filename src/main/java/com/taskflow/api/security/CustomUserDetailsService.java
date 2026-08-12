@@ -2,7 +2,6 @@ package com.taskflow.api.security;
 
 import com.taskflow.api.user.User;
 import com.taskflow.api.user.UserRepository;
-import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     return org.springframework.security.core.userdetails.User.builder()
         .username(user.getEmail())
         .password(user.getPasswordHash())
-        .authorities(List.of())
+        .authorities("ROLE_" + user.getRole().name())
         .build();
   }
 }
