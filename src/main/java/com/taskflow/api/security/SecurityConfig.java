@@ -52,6 +52,8 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/swagger-ui/**")
                     .permitAll()
+                    .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
         .exceptionHandling(
