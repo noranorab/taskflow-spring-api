@@ -1,9 +1,11 @@
 package com.taskflow.api.auth;
 
+import com.taskflow.api.user.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,22 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
     return ResponseEntity.ok(authService.login(request));
+  }
+
+  @PostMapping("/refresh")
+  public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshRequest request) {
+    return ResponseEntity.ok(authService.refresh(request));
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<Void> logout(@Valid @RequestBody LogoutRequest request) {
+    authService.logout(request);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/logout-all")
+  public ResponseEntity<Void> logoutAll(@AuthenticationPrincipal User currentUser) {
+    authService.logoutAll(currentUser);
+    return ResponseEntity.noContent().build();
   }
 }

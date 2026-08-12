@@ -78,6 +78,12 @@ public class GlobalExceptionHandler {
         .body(ApiErrorResponse.of("UNAUTHORIZED", "Invalid email or password"));
   }
 
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<ApiErrorResponse> handleUnauthorized(UnauthorizedException ex) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        .body(ApiErrorResponse.of("UNAUTHORIZED", ex.getMessage()));
+  }
+
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiErrorResponse> handleUnexpected(Exception ex) {
     log.error("Unhandled exception", ex);

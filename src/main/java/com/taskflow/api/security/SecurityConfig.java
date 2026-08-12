@@ -45,7 +45,9 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers(
+                auth.requestMatchers("/auth/logout-all")
+                    .authenticated()
+                    .requestMatchers(
                         "/auth/**",
                         "/actuator/health",
                         "/docs/**",
